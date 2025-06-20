@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { toast } from 'react-toastify'
-import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Input'
-import Select from '@/components/atoms/Select'
-import ContactCard from '@/components/molecules/ContactCard'
-import ContactTable from '@/components/organisms/ContactTable'
-import ContactForm from '@/components/organisms/ContactForm'
-import SkeletonLoader from '@/components/molecules/SkeletonLoader'
-import EmptyState from '@/components/molecules/EmptyState'
-import ErrorState from '@/components/molecules/ErrorState'
-import ApperIcon from '@/components/ApperIcon'
-import contactService from '@/services/api/contactService'
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import ContactCard from "@/components/molecules/ContactCard";
+import EmptyState from "@/components/molecules/EmptyState";
+import ErrorState from "@/components/molecules/ErrorState";
+import SkeletonLoader from "@/components/molecules/SkeletonLoader";
+import ContactTable from "@/components/organisms/ContactTable";
+import ContactForm from "@/components/organisms/ContactForm";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
+import contactService from "@/services/api/contactService";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([])
@@ -53,12 +53,12 @@ const Contacts = () => {
   const filterContacts = () => {
     let filtered = [...contacts]
 
-    if (searchQuery) {
+if (searchQuery) {
       const query = searchQuery.toLowerCase()
       filtered = filtered.filter(contact =>
-        contact.name.toLowerCase().includes(query) ||
-        contact.email.toLowerCase().includes(query) ||
-        contact.company.toLowerCase().includes(query)
+        contact?.name?.toLowerCase().includes(query) ||
+        contact?.email?.toLowerCase().includes(query) ||
+        contact?.company?.toLowerCase().includes(query)
       )
     }
 
@@ -146,9 +146,34 @@ const Contacts = () => {
 
   const clearFilters = () => {
     setSearchQuery('')
-    setStatusFilter('')
-    setTagFilter('')
+setTagFilter('')
   }
+
+  const handleMergeContact = async (sourceId, targetId) => {
+    if (!window.confirm('Are you sure you want to merge these contacts? This action cannot be undone.')) {
+      return
+    }
+
+    try {
+      await contactService.merge(sourceId, targetId)
+      setContacts(prev => prev.filter(contact => contact.Id !== sourceId))
+      toast.success('Contacts merged successfully')
+    } catch (err) {
+      toast.error('Failed to merge contacts')
+    }
+  }
+
+  const handleFindDuplicates = async () => {
+    try {
+      const duplicates = await contactService.findDuplicates()
+      setDuplicateData(duplicates)
+      toast.info(`Found ${duplicates.length} potential duplicates`)
+    } catch (err) {
+      toast.error('Failed to find duplicates')
+    }
+  }
+
+  const [duplicateData, setDuplicateData] = useState([])
 
   const statusOptions = [
     { value: 'Active', label: 'Active' },
@@ -159,6 +184,7 @@ const Contacts = () => {
   const uniqueTags = [...new Set(contacts.flatMap(contact => contact.tags || []))]
 
   if (loading && contacts.length === 0) {
+    return (
     return (
       <div className="p-6">
         <SkeletonLoader count={6} type="card" />
@@ -311,11 +337,15 @@ const Contacts = () => {
                 />
               ))}
             </div>
-          ) : (
+) : (
             <ContactTable
               contacts={filteredContacts}
               onStatusChange={handleStatusChange}
               onDelete={handleDeleteContact}
+              onEdit={handleEditContact}
+              onMerge={handleMergeContact}
+              onBulkMerge={handleFindDuplicates}
+              duplicateData={duplicateData}
               loading={loading}
             />
           )}

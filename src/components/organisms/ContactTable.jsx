@@ -1,12 +1,13 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import Avatar from '@/components/atoms/Avatar'
-import Badge from '@/components/atoms/Badge'
-import Button from '@/components/atoms/Button'
-import ApperIcon from '@/components/ApperIcon'
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Avatar from "@/components/atoms/Avatar";
+import Badge from "@/components/atoms/Badge";
+import Badge from "@/components/atoms/Badge";
 
-const ContactTable = ({ contacts, onStatusChange, onDelete, loading = false }) => {
+const ContactTable = ({ contacts = [], onStatusChange, onDelete, onMerge, duplicateData = {}, loading = false }) => {
   const navigate = useNavigate()
   const [sortField, setSortField] = useState('name')
   const [sortDirection, setSortDirection] = useState('asc')
@@ -26,8 +27,7 @@ const ContactTable = ({ contacts, onStatusChange, onDelete, loading = false }) =
       setSortDirection('asc')
     }
   }
-
-  const sortedContacts = [...contacts].sort((a, b) => {
+const sortedContacts = contacts.length > 0 ? [...contacts].sort((a, b) => {
     const aValue = a[sortField] || ''
     const bValue = b[sortField] || ''
     
@@ -35,12 +35,10 @@ const ContactTable = ({ contacts, onStatusChange, onDelete, loading = false }) =
       return aValue.toString().localeCompare(bValue.toString())
     }
     return bValue.toString().localeCompare(aValue.toString())
-  })
-
-  const handleSelectAll = (checked) => {
-    setSelectedContacts(checked ? contacts.map(c => c.Id) : [])
+  }) : []
+const handleSelectAll = (checked) => {
+    setSelectedContacts(checked ? contacts.map(c => c?.Id).filter(Boolean) : [])
   }
-
   const handleSelectContact = (contactId, checked) => {
     if (checked) {
       setSelectedContacts(prev => [...prev, contactId])
@@ -225,13 +223,24 @@ const ContactTable = ({ contacts, onStatusChange, onDelete, loading = false }) =
                 </div>
               </div>
               
-              <div className="col-span-1">
-                <button
-                  onClick={() => onDelete(contact.Id)}
-                  className="p-1 text-gray-400 hover:text-error transition-colors rounded"
-                >
-                  <ApperIcon name="Trash2" size={16} />
-                </button>
+<div className="col-span-1">
+                <div className="flex items-center gap-1">
+                  {duplicateData[contact.Id] && (
+                    <button
+                      onClick={() => onMerge && onMerge(contact.Id)}
+                      className="p-1 text-warning hover:text-warning/80 transition-colors rounded"
+                      title="Merge duplicates"
+                    >
+                      <ApperIcon name="Merge" size={14} />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => onDelete(contact.Id)}
+                    className="p-1 text-gray-400 hover:text-error transition-colors rounded"
+                  >
+                    <ApperIcon name="Trash2" size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
