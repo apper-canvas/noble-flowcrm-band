@@ -5,7 +5,6 @@ import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Avatar from "@/components/atoms/Avatar";
 import Badge from "@/components/atoms/Badge";
-import Badge from "@/components/atoms/Badge";
 
 const ContactTable = ({ contacts = [], onStatusChange, onDelete, onMerge, duplicateData = {}, loading = false }) => {
   const navigate = useNavigate()
