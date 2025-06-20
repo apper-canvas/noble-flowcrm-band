@@ -144,9 +144,10 @@ if (searchQuery) {
     setEditingContact(null)
   }
 
-  const clearFilters = () => {
+const clearFilters = () => {
     setSearchQuery('')
-setTagFilter('')
+    setStatusFilter('')
+    setTagFilter('')
   }
 
   const handleMergeContact = async (sourceId, targetId) => {
@@ -184,7 +185,6 @@ setTagFilter('')
   const uniqueTags = [...new Set(contacts.flatMap(contact => contact.tags || []))]
 
   if (loading && contacts.length === 0) {
-    return (
     return (
       <div className="p-6">
         <SkeletonLoader count={6} type="card" />

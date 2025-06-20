@@ -1,4 +1,4 @@
-import contactsData from "@/mockData/contacts.json";
+import contactsData from "@/services/mockData/contacts.json";
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
