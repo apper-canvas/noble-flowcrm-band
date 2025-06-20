@@ -1,0 +1,77 @@
+[
+  {
+    "Id": 1,
+    "name": "Sarah Johnson",
+    "email": "sarah.johnson@techcorp.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "TechCorp Solutions",
+    "status": "Active",
+    "tags": ["Enterprise", "Priority"],
+    "createdAt": "2024-01-15T10:30:00Z",
+    "customFields": {
+      "industry": "Technology",
+      "employees": "500-1000",
+      "website": "techcorp.com"
+    }
+  },
+  {
+    "Id": 2,
+    "name": "Marcus Rodriguez",
+    "email": "marcus.r@innovatelab.io",
+    "phone": "+1 (555) 234-5678",
+    "company": "InnovateLab",
+    "status": "Active",
+    "tags": ["Startup", "Tech"],
+    "createdAt": "2024-01-20T14:15:00Z",
+    "customFields": {
+      "industry": "Software Development",
+      "employees": "10-50",
+      "website": "innovatelab.io"
+    }
+  },
+  {
+    "Id": 3,
+    "name": "Emily Chen",
+    "email": "emily.chen@globalmart.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "GlobalMart Inc",
+    "status": "Prospect",
+    "tags": ["Retail", "Large"],
+    "createdAt": "2024-01-25T09:45:00Z",
+    "customFields": {
+      "industry": "Retail",
+      "employees": "1000+",
+      "website": "globalmart.com"
+    }
+  },
+  {
+    "Id": 4,
+    "name": "David Thompson",
+    "email": "d.thompson@consultpro.net",
+    "phone": "+1 (555) 456-7890",
+    "company": "ConsultPro",
+    "status": "Active",
+    "tags": ["Consulting", "SMB"],
+    "createdAt": "2024-02-01T11:20:00Z",
+    "customFields": {
+      "industry": "Business Consulting",
+      "employees": "50-100",
+      "website": "consultpro.net"
+    }
+  },
+  {
+    "Id": 5,
+    "name": "Lisa Wang",
+    "email": "lisa.wang@designstudio.co",
+    "phone": "+1 (555) 567-8901",
+    "company": "Design Studio Co",
+    "status": "Inactive",
+    "tags": ["Creative", "Small"],
+    "createdAt": "2024-02-05T16:30:00Z",
+    "customFields": {
+      "industry": "Design",
+      "employees": "5-10",
+      "website": "designstudio.co"
+    }
+  }
+]
